@@ -1,4 +1,6 @@
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -7,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import javax.jws.WebMethod;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +17,7 @@ import static org.junit.Assert.*;
 
 public class SeleniumTest {
     Selenium selenium;
+    WebDriver webDriver;
     @Before
     public void initWebDriver(){
         selenium = new Selenium();
@@ -23,6 +27,7 @@ public class SeleniumTest {
         selenium.webDriver = new FirefoxDriver(options);
         String url = "https://search.damai.cn/";
         selenium.webDriver.get(url);
+        webDriver = selenium.webDriver;
     }
 
     @Test
@@ -71,5 +76,23 @@ public class SeleniumTest {
                 assert (c.getValue().equals("sky"));
         }
         assert (false);
+    }
+
+    @Test
+    //6 测试跳转到登录页面，并显示登录按钮
+    public void hrefEnabled(){
+        WebElement webElement = webDriver.findElement(By.className("user-header"));
+        webElement.click();
+        System.out.println(webDriver.getCurrentUrl());
+        for (String s: webDriver.getWindowHandles())
+            webDriver.switchTo().window(s);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        webDriver.findElement(By.id("alibaba-login-iframe"));
+        webDriver.switchTo().frame("alibaba-login-box");
+        assertEquals(true, webDriver.findElement(By.className("fm-submit")).isDisplayed());
     }
 }

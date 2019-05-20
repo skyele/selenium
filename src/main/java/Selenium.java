@@ -81,5 +81,4 @@ public class Selenium {
         webDriver.manage().addCookie(cookie);
     }
 
-
 }
