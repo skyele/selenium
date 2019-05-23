@@ -52,13 +52,39 @@ public class SeleniumTest {
         selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
         WebElement after = selenium.webDriver.findElement(By.className("factor-selected-city"));
         assert (after.getText().equals(target));
+        selenium.singleSelect(selenium.webDriver, "factor-content-item", "演唱会");
+        selenium.singleSelect(selenium.webDriver, "factor-content-item", "流行");
+        selenium.singleSelect(selenium.webDriver, "factor-content-item", "明天");
     }
 
     @Test
     public void setTextContent() {
         String content = selenium.setTextContent(selenium.webDriver, "input-search", "天津");
         assert (content.equals("天津"));
+        WebElement webElement = webDriver.findElement(By.className("btn-search"));
+        webElement.click();
+        content = selenium.setTextContent(selenium.webDriver, "input-search", "蔡徐坤");
+        assert (content.equals("蔡徐坤"));
+        webElement.click();
+        content = selenium.setTextContent(selenium.webDriver, "input-search", "周杰伦");
+        assert (content.equals("周杰伦"));
+        webElement.click();
     }
+
+    @Test
+    public void searchAndSelect() {
+        String content = selenium.setTextContent(selenium.webDriver, "input-search", "周杰伦");
+        assert (content.equals("周杰伦"));
+        WebElement webElement = webDriver.findElement(By.className("btn-search"));
+        webElement.click();
+        WebElement before = selenium.webDriver.findElement(By.className("factor-selected-city"));
+        String target = "上海";
+        assert (!before.getText().equals(target));
+        selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
+        WebElement after = selenium.webDriver.findElement(By.className("factor-selected-city"));
+        assert (after.getText().equals(target));
+    }
+
 
     @Test
     public void downDragFrame() {
@@ -75,7 +101,7 @@ public class SeleniumTest {
             if(c.getName() == "name")
                 assert (c.getValue().equals("sky"));
         }
-        assert (false);
+//        assert (false);
     }
 
     @Test

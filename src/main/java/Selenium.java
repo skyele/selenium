@@ -66,6 +66,7 @@ public class Selenium {
     //3
     String setTextContent(WebDriver webDriver, String className, String content){
         WebElement webElement = webDriver.findElement(By.className(className));
+        webElement.clear();
         webElement.sendKeys(content);
         return webElement.getAttribute("value");
     }
