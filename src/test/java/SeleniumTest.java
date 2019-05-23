@@ -63,11 +63,13 @@ public class SeleniumTest {
         assert (content.equals("天津"));
         WebElement webElement = webDriver.findElement(By.className("btn-search"));
         webElement.click();
-        content = selenium.setTextContent(selenium.webDriver, "input-search", "蔡徐坤");
-        assert (content.equals("蔡徐坤"));
+        content = selenium.setTextContent(selenium.webDriver, "input-search", "仓木麻衣");
+        assert (content.equals("仓木麻衣"));
+        webElement = webDriver.findElement(By.className("btn-search"));
         webElement.click();
         content = selenium.setTextContent(selenium.webDriver, "input-search", "周杰伦");
         assert (content.equals("周杰伦"));
+        webElement = webDriver.findElement(By.className("btn-search"));
         webElement.click();
     }
 
@@ -78,7 +80,7 @@ public class SeleniumTest {
         WebElement webElement = webDriver.findElement(By.className("btn-search"));
         webElement.click();
         WebElement before = selenium.webDriver.findElement(By.className("factor-selected-city"));
-        String target = "上海";
+        String target = "北京";
         assert (!before.getText().equals(target));
         selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
         WebElement after = selenium.webDriver.findElement(By.className("factor-selected-city"));
@@ -91,6 +93,12 @@ public class SeleniumTest {
         List<WebElement> before = selenium.webDriver.findElements(By.className("factor-content-item"));
         List<WebElement> after = selenium.downDragFrame(selenium.webDriver, "factor-more", "factor-content-item");
         assert (before.size() <= after.size());
+        WebElement beforeW = selenium.webDriver.findElement(By.className("factor-selected-city"));
+        String target = "温州";
+        assert (!beforeW.getText().equals(target));
+        selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
+        WebElement afterW = selenium.webDriver.findElement(By.className("factor-selected-city"));
+        assert (afterW.getText().equals(target));
     }
 
     @Test
