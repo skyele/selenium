@@ -30,19 +30,33 @@ public class SeleniumTest {
         webDriver = selenium.webDriver;
     }
 
-    @Test
-    public void buttonEnableCheck() {
-        String className = "btn-search";
-        boolean ret = selenium.buttonEnableCheck(selenium.webDriver, className);
-        assert(ret == true);
-    }
+//    //看button是否display
+//    @Test
+//    public void buttonDisplayCheck() {
+//        String className = "btn-search";
+//        boolean ret = selenium.buttonDisplayCheck(selenium.webDriver, className);
+//        assert (ret == true);
+//    }
+//
+//    //看button是否enable
+//    @Test
+//    public void buttonEnableCheck() {
+//        String className = "btn-search";
+//        boolean ret = selenium.buttonEnableCheck(selenium.webDriver, className);
+//        assert(ret == true);
+//    }
 
+    //看button是否display & enable //搜索按钮
     @Test
-    public void buttonDisplayCheck() {
+    public void buttonDisplayAndEnableCheck(){
         String className = "btn-search";
         boolean ret = selenium.buttonDisplayCheck(selenium.webDriver, className);
         assert (ret == true);
+        ret = selenium.buttonEnableCheck(selenium.webDriver, className);
+        assert(ret == true);
     }
+
+    //测试单选
 
     @Test
     public void singleSelect() {
@@ -52,11 +66,9 @@ public class SeleniumTest {
         selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
         WebElement after = selenium.webDriver.findElement(By.className("factor-selected-city"));
         assert (after.getText().equals(target));
-        selenium.singleSelect(selenium.webDriver, "factor-content-item", "演唱会");
-        selenium.singleSelect(selenium.webDriver, "factor-content-item", "流行");
-        selenium.singleSelect(selenium.webDriver, "factor-content-item", "明天");
     }
 
+    //测试搜索框
     @Test
     public void setTextContent() {
         String content = selenium.setTextContent(selenium.webDriver, "input-search", "天津");
@@ -73,6 +85,7 @@ public class SeleniumTest {
         webElement.click();
     }
 
+    //测试单选
     @Test
     public void searchAndSelect() {
         String content = selenium.setTextContent(selenium.webDriver, "input-search", "周杰伦");
@@ -80,14 +93,14 @@ public class SeleniumTest {
         WebElement webElement = webDriver.findElement(By.className("btn-search"));
         webElement.click();
         WebElement before = selenium.webDriver.findElement(By.className("factor-selected-city"));
-        String target = "北京";
+        String target = "上海";
         assert (!before.getText().equals(target));
         selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
         WebElement after = selenium.webDriver.findElement(By.className("factor-selected-city"));
         assert (after.getText().equals(target));
     }
 
-
+    //测试下拉框
     @Test
     public void downDragFrame() {
         List<WebElement> before = selenium.webDriver.findElements(By.className("factor-content-item"));
@@ -95,12 +108,13 @@ public class SeleniumTest {
         assert (before.size() <= after.size());
         WebElement beforeW = selenium.webDriver.findElement(By.className("factor-selected-city"));
         String target = "温州";
-        assert (!beforeW.getText().equals(target));
-        selenium.singleSelect(selenium.webDriver, "factor-content-item", target);
+        assert (!beforeW.getText().equals(target));//下拉之前没有温州
+        selenium.singleSelect(selenium.webDriver, "factor-content-item", target);//选择温州
         WebElement afterW = selenium.webDriver.findElement(By.className("factor-selected-city"));
         assert (afterW.getText().equals(target));
     }
 
+    //测试cookie
     @Test
     public void setCookie() {
         selenium.setCookie(selenium.webDriver, "name", "sky");
@@ -109,7 +123,7 @@ public class SeleniumTest {
             if(c.getName() == "name")
                 assert (c.getValue().equals("sky"));
         }
-//        assert (false);
+        assert (false);
     }
 
     @Test
@@ -118,14 +132,15 @@ public class SeleniumTest {
         WebElement webElement = webDriver.findElement(By.className("user-header"));
         webElement.click();
         System.out.println(webDriver.getCurrentUrl());
-        for (String s: webDriver.getWindowHandles())
+        for (String s: webDriver.getWindowHandles()) {
             webDriver.switchTo().window(s);
+        }
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        webDriver.findElement(By.id("alibaba-login-iframe"));
+//        webDriver.findElement(By.id("alibaba-login-iframe"));
         webDriver.switchTo().frame("alibaba-login-box");
         assertEquals(true, webDriver.findElement(By.className("fm-submit")).isDisplayed());
     }

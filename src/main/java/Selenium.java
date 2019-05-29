@@ -22,16 +22,6 @@ public class Selenium {
         driver.get(url);
 
         WebElement saveButton = driver.findElement(By.className("btn-search"));
-        if(saveButton == null)
-            System.out.println("????????????//");
-        else
-            System.out.println("!!!!!!!!!!!!!!!!!!!!");
-        boolean xi = saveButton.isDisplayed();
-        if(xi)
-            System.out.println("!!!!!!!!!!!!!!!!sadfsdafsdf");
-        boolean fi = saveButton.isEnabled();
-        if(fi)
-            System.out.println("safdsdfsdfs");
     }
 
     public void initWebDriver(){
@@ -53,7 +43,7 @@ public class Selenium {
         WebElement saveButton = webDriver.findElement(By.className(className));
         return saveButton.isDisplayed();
     }
-    //2
+    //2 通过遍历所有的城市，找到target，然后click
     void singleSelect(WebDriver webDriver,String className, String target){
         List<WebElement> webElements = webDriver.findElements(By.className(className));
         for(WebElement webElement : webElements){
